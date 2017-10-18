@@ -47,7 +47,7 @@
 #define EMAIL_SERVER "172.16.72.8"
 
 // When should the system perform measurements 300 = 5 minutes
-#define INTERVAL_SECONDS 30
+#define INTERVAL_SECONDS 300
 
 // Global variables
 WeatherStationData *data;
