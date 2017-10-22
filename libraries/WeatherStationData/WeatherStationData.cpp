@@ -89,12 +89,36 @@ int WeatherStationData::numberOfSensors()
 
 String WeatherStationData::getCurrentSensor(int currentSensor)
 {
-	for(int count = 0, sensor = 0;count <= currentSensor;++count)
+	int sensor;
+	int count;
+	String sensorName = "ERROR";
+	for(count = 0, sensor = 0;count < currentSensor;)
 	{
-		while(!(0x1 & (sensors << sensor)))
+		while(!(0x1 & (sensors >> sensor)))
+		{
+			++sensor;
+		}
+		// Increment if we have not yet found the current sensor
+		if(++count < currentSensor)
 		{
 			++sensor;
 		}
 	}
+	switch (sensor + 1)
+	{
+		case(1):
+			sensorName = "Temperature";
+			break;
+		case(2):
+			sensorName = "Humidity";
+			break;
+		case(3):
+			sensorName = "Light";
+			break;
+		case(4):
+			sensorName = "Battery";
+			break;
+	}
+	return sensorName;
 }
 

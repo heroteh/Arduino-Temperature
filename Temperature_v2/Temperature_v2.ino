@@ -47,7 +47,7 @@
 #define EMAIL_SERVER "172.16.72.8"
 
 // When should the system perform measurements 300 = 5 minutes
-#define INTERVAL_SECONDS 300
+#define INTERVAL_SECONDS 30
 
 // Global variables
 WeatherStationData *data;
@@ -95,6 +95,8 @@ void setup()
 void loop() 
 { 
   unsigned long currentMillis = millis();
+  unsigned long displaySensorLength;
+  unsigned long currentSensor;
   float fullLight;
 
   if(previousMillis == 0 || (currentMillis - previousMillis) > (INTERVAL_SECONDS * 1000))
@@ -164,11 +166,31 @@ void loop()
       }
       else
       { 
-        // 
-        for(int currentSensor = 0;currentSensor < data->numberOfSensors();currentSensor)
+        // Calculate how long each sensor should be displayed
+        displaySensorLength = INTERVAL_SECONDS / data->numberOfSensors() * 1000;
+        currentMillis = millis();
+        currentSensor = 0;
+        Serial.println("Current Sensor " + data->getCurrentSensor(currentSensor));
+        while((currentMillis - previousMillis) < (INTERVAL_SECONDS * 1000))
+        {
+          if((currentMillis - previousMillis) > displaySensorLength)
+          {
+            currentSensor++;
+            displaySensorLength += displaySensorLength;  
+            Serial.println("Current Sensor " + data->getCurrentSensor(currentSensor));
+          }
+          currentMillis = millis();
+          delay(1);
+        }
+        /*
+        displaySensorLength = INTERVAL_SECONDS / data->numberOfSensors();
+        currentDisplayLength = currentMillis;
+        // This is where I need to switch the sensors
+        //for(int currentSensor = 0;currentSensor < data->numberOfSensors();++currentSensor)
         {
             
-        }   
+        } 
+        */  
         oled->displayData(data);
       }
     }
