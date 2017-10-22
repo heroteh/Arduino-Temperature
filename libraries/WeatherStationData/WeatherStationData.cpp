@@ -87,6 +87,7 @@ int WeatherStationData::numberOfSensors()
 	return std::bitset<8>(sensors).count();
 }
 
+// currentSensor starts at 1
 String WeatherStationData::getCurrentSensor(int currentSensor)
 {
 	int sensor;

@@ -16,7 +16,7 @@ class WeatherStationOLED
 public:
 	WeatherStationOLED();
 	WeatherStationOLED(boolean off_at_night);
-	void displayData(WeatherStationData *data);
+	void displayData(WeatherStationData *data, String currentStarSensor);
 	void displayOff();
 	void displayInit();
 	int Off_at_night();

@@ -16,7 +16,7 @@ WeatherStationOLED::WeatherStationOLED(boolean off_at_night) : WeatherStationOLE
 	this->off_at_night = off_at_night;
 } 
 
-void WeatherStationOLED::displayData(WeatherStationData *data)
+void WeatherStationOLED::displayData(WeatherStationData *data, String currentStarSensor)
 {
 	display->ssd1306_command(SSD1306_DISPLAYON);
 	display->clearDisplay();
@@ -33,7 +33,18 @@ void WeatherStationOLED::displayData(WeatherStationData *data)
 	}
 	
     display->setTextSize(4);
-    display->println(String((int)data->Temperature()) + String("F"));
+	if(currentStarSensor.equals("Temperature"))
+	{
+		display->println(String((int)data->Temperature()) + String("F T"));
+	}
+	else if(currentStarSensor.equals("Humidity"))
+	{
+		display->println(String((int)data->Humidity()) + String("% H"));		
+	}
+	else if(currentStarSensor.equals("Light"))
+	{
+		display->println(String((int)data->LightPercent()) + String("% L"));				
+	}
     display->display();	
 }
 

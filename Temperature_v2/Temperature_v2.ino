@@ -169,29 +169,27 @@ void loop()
         // Calculate how long each sensor should be displayed
         displaySensorLength = INTERVAL_SECONDS / data->numberOfSensors() * 1000;
         currentMillis = millis();
-        currentSensor = 0;
-        Serial.println("Current Sensor " + data->getCurrentSensor(currentSensor));
+        currentSensor = 1;
+        oled->displayData(data, data->getCurrentSensor(currentSensor));
+        if(DEBUG)
+        {
+          Serial.println("Current Sensor " + data->getCurrentSensor(currentSensor) + " " + (String)currentSensor);
+        }
         while((currentMillis - previousMillis) < (INTERVAL_SECONDS * 1000))
         {
           if((currentMillis - previousMillis) > displaySensorLength)
           {
             currentSensor++;
             displaySensorLength += displaySensorLength;  
-            Serial.println("Current Sensor " + data->getCurrentSensor(currentSensor));
+            if(DEBUG)
+            {
+              Serial.println("Current Sensor " + data->getCurrentSensor(currentSensor) + " " + (String)currentSensor);
+            }
+            oled->displayData(data, data->getCurrentSensor(currentSensor));
           }
           currentMillis = millis();
           delay(1);
         }
-        /*
-        displaySensorLength = INTERVAL_SECONDS / data->numberOfSensors();
-        currentDisplayLength = currentMillis;
-        // This is where I need to switch the sensors
-        //for(int currentSensor = 0;currentSensor < data->numberOfSensors();++currentSensor)
-        {
-            
-        } 
-        */  
-        oled->displayData(data);
       }
     }
     
