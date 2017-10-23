@@ -34,7 +34,7 @@
 // Light stuff
 // The value of 12 seems to work well for bedroom
 // The value of 750 works well in the computer room to allow control with desk lamp
-#define LIGHT_LEVEL_OFF 750
+#define LIGHT_LEVEL_OFF 12
 
 // Wireless
 #define WIRELESS_SSID "network"
